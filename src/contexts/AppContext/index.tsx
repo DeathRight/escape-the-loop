@@ -1,6 +1,7 @@
 // Create AppContext and it's provider with the current theme and proper typing
 
 import React from "react";
+import { darkTheme, theme, ThemeProvider } from "../../../stitches.config";
 import { useToggle } from "../../hooks/useToggle";
 
 /* ------------------------------- AppContext ------------------------------- */
@@ -22,7 +23,11 @@ const AppContextProvider = (props: AppContextProviderProps) => {
   const [darkMode, toggleDarkMode] = useToggle(false);
 
   return (
-    <AppContext.Provider value={{ darkMode }}>{children}</AppContext.Provider>
+    <AppContext.Provider value={{ darkMode }}>
+      <ThemeProvider theme={darkMode ? darkTheme : theme}>
+        {children}
+      </ThemeProvider>
+    </AppContext.Provider>
   );
 };
 

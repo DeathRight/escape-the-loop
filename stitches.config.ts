@@ -13,7 +13,12 @@ import {
   indigoDarkA,
 } from "@radix-ui/colors";
 import { createStitches } from "stitches-native";
-import { Scales, scaleToStepTokens } from "./stitches/colorUtil";
+import { CSSProperties } from "stitches-native/src/types/css-util";
+import {
+  prefixStepTokensWithScale,
+  Scales,
+  scaleToStepTokens,
+} from "./stitches/colorUtil";
 
 // Start time for performance measurement
 const startTime = Date.now();
@@ -44,6 +49,14 @@ const dark: Scales = {
 
 // Light theme colors
 const lightThemeColors = {
+  // Spread light color scales
+  ...prefixStepTokensWithScale(light.neutral, "neutral"),
+  ...prefixStepTokensWithScale(light.neutralA, "neutralA"),
+  ...prefixStepTokensWithScale(light.brand, "brand"),
+  ...prefixStepTokensWithScale(light.brandA, "brandA"),
+  ...prefixStepTokensWithScale(light.accent, "accent"),
+  ...prefixStepTokensWithScale(light.accentA, "accentA"),
+
   // Main
   appBg: light.neutral.appBg,
   headerBg: light.neutral.appBg,
@@ -71,6 +84,14 @@ const lightThemeColors = {
 
 // Dark theme colors
 const darkThemeColors: typeof lightThemeColors = {
+  // Spread dark color scales
+  ...prefixStepTokensWithScale(dark.neutral, "neutral"),
+  ...prefixStepTokensWithScale(dark.neutralA, "neutralA"),
+  ...prefixStepTokensWithScale(dark.brand, "brand"),
+  ...prefixStepTokensWithScale(dark.brandA, "brandA"),
+  ...prefixStepTokensWithScale(dark.accent, "accent"),
+  ...prefixStepTokensWithScale(dark.accentA, "accentA"),
+
   // Main
   appBg: dark.neutral.appBg,
   headerBg: dark.neutral.appBg,
@@ -110,34 +131,34 @@ const { styled, css, theme, createTheme, useTheme, ThemeProvider, config } =
         ...lightThemeColors,
       },
       space: {
-        xs: "2px",
-        sm: "4px",
-        md: "8px",
-        lg: "16px",
-        xl: "32px",
+        xs: 2,
+        sm: 4,
+        md: 8,
+        lg: 16,
+        xl: 32,
       },
       sizes: {
-        header: "48px",
+        header: 48,
       },
       fontSizes: {
-        xs: "6px",
-        sm: "8px",
-        md: "14px",
-        lg: "32px",
-        heading: "42px",
-        subtitle: "54px",
-        title: "64px",
+        xs: 6,
+        sm: 8,
+        md: 14,
+        lg: 32,
+        heading: 42,
+        subtitle: 54,
+        title: 64,
       },
       borderWidths: {
-        sm: "1px",
-        md: "2px",
-        lg: "4px",
+        sm: 1,
+        md: 2,
+        lg: 4,
       },
       radii: {
-        sm: "2px",
-        md: "4px",
-        lg: "8px",
-        round: "9999px",
+        sm: 2,
+        md: 4,
+        lg: 8,
+        round: 9999,
       },
       zIndices: {
         front: 100,
@@ -145,6 +166,64 @@ const { styled, css, theme, createTheme, useTheme, ThemeProvider, config } =
         overlay: 800,
         modal: 900,
       },
+    },
+    utils: {
+      p: (value: CSSProperties["padding"]) => ({
+        paddingTop: value,
+        paddingBottom: value,
+        paddingLeft: value,
+        paddingRight: value,
+      }),
+      pt: (value: CSSProperties["paddingTop"]) => ({
+        paddingTop: value,
+      }),
+      pr: (value: CSSProperties["paddingRight"]) => ({
+        paddingRight: value,
+      }),
+      pb: (value: CSSProperties["paddingBottom"]) => ({
+        paddingBottom: value,
+      }),
+      pl: (value: CSSProperties["paddingLeft"]) => ({
+        paddingLeft: value,
+      }),
+      px: (value: CSSProperties["paddingLeft"]) => ({
+        paddingLeft: value,
+        paddingRight: value,
+      }),
+      py: (value: CSSProperties["paddingTop"]) => ({
+        paddingTop: value,
+        paddingBottom: value,
+      }),
+      m: (value: CSSProperties["margin"]) => ({
+        marginTop: value,
+        marginBottom: value,
+        marginLeft: value,
+        marginRight: value,
+      }),
+      mt: (value: CSSProperties["marginTop"]) => ({
+        marginTop: value,
+      }),
+      mr: (value: CSSProperties["marginRight"]) => ({
+        marginRight: value,
+      }),
+      mb: (value: CSSProperties["marginBottom"]) => ({
+        marginBottom: value,
+      }),
+      ml: (value: CSSProperties["marginLeft"]) => ({
+        marginLeft: value,
+      }),
+      mx: (value: CSSProperties["marginLeft"]) => ({
+        marginLeft: value,
+        marginRight: value,
+      }),
+      my: (value: CSSProperties["marginTop"]) => ({
+        marginTop: value,
+        marginBottom: value,
+      }),
+      size: (value: CSSProperties["width"]) => ({
+        width: value,
+        height: value,
+      }),
     },
   });
 
@@ -159,6 +238,9 @@ const darkTheme = createTheme({
     ...darkThemeColors,
   },
 });
+
+export const lightScales = light;
+export const darkScales = dark;
 
 export {
   styled,
