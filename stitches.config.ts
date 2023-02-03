@@ -60,9 +60,9 @@ const lightThemeColors = {
   // Main
   appBg: light.neutral.appBg,
   headerBg: light.neutral.appBg,
-  headerBorder: light.neutral.subtleBg,
+  headerBorder: light.neutralA.subtleBg,
   footerBg: light.neutral.appBg,
-  footerBorder: light.neutral.subtleBg,
+  footerBorder: light.neutralA.subtleBorder,
   // Text
   textHiC: light.neutralA.hiC,
   textLoC: light.neutralA.loC,
@@ -77,8 +77,13 @@ const lightThemeColors = {
   buttonBg: light.accent.elBg,
   buttonBgHover: light.accent.elBgHover,
   buttonBgActive: light.accent.elBgActive,
+  // "Call To Action"'s
+  ctaBgDisabled: light.neutralA.elBgHover,
+  ctaBg: light.brand.elBgHover,
+  ctaBgHover: light.brand.elBgActive,
+  ctaBgActive: light.brand.subtleBorder,
   // Button Text
-  buttonTextDisabled: light.neutralA.loC,
+  buttonTextDisabled: light.neutralA.solidBg,
   buttonText: light.accentA.hiC,
 };
 
@@ -95,9 +100,9 @@ const darkThemeColors: typeof lightThemeColors = {
   // Main
   appBg: dark.neutral.appBg,
   headerBg: dark.neutral.appBg,
-  headerBorder: dark.neutral.subtleBg,
+  headerBorder: dark.neutralA.subtleBg,
   footerBg: dark.neutral.appBg,
-  footerBorder: dark.neutral.subtleBg,
+  footerBorder: dark.neutralA.subtleBorder,
   // Text
   textHiC: dark.neutralA.hiC,
   textLoC: dark.neutralA.loC,
@@ -112,8 +117,13 @@ const darkThemeColors: typeof lightThemeColors = {
   buttonBg: dark.accent.elBg,
   buttonBgHover: dark.accent.elBgHover,
   buttonBgActive: dark.accent.elBgActive,
+  // "Call To Action"'s
+  ctaBgDisabled: dark.neutralA.elBgHover,
+  ctaBg: dark.accent.elBgHover,
+  ctaBgHover: dark.accent.elBgActive,
+  ctaBgActive: dark.accent.subtleBorder,
   // Button Text
-  buttonTextDisabled: dark.neutralA.loC,
+  buttonTextDisabled: dark.neutralA.solidBg,
   buttonText: dark.accentA.hiC,
 };
 
@@ -131,23 +141,26 @@ const { styled, css, theme, createTheme, useTheme, ThemeProvider, config } =
         ...lightThemeColors,
       },
       space: {
-        xs: 2,
-        sm: 4,
-        md: 8,
-        lg: 16,
-        xl: 32,
+        xs: 1,
+        sm: 2,
+        md: 4,
+        lg: 8,
+        xl: 16,
+        xxl: 32,
       },
       sizes: {
-        header: 48,
+        header: 32,
       },
       fontSizes: {
         xs: 6,
         sm: 8,
-        md: 14,
-        lg: 32,
-        heading: 42,
-        subtitle: 54,
-        title: 64,
+        md: 12,
+        lg: 14,
+        xl: 18,
+        xxl: 24,
+        heading: 32,
+        subtitle: 42,
+        title: 48,
       },
       borderWidths: {
         sm: 1,

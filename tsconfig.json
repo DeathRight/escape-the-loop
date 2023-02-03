@@ -1,4 +1,14 @@
 {
-  "compilerOptions": {},
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@util/*": ["./src/util/*"],
+      "@components/*": ["./src/components/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@contexts/*": ["./src/contexts/*"],
+      "@stitchesUtil": ["./stitches/colorUtil"],
+      "@stitchesConfig": ["./stitches.config.ts"]
+    }
+  },
   "extends": "expo/tsconfig.base"
 }

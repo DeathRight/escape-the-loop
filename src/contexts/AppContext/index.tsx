@@ -1,16 +1,17 @@
-// Create AppContext and it's provider with the current theme and proper typing
-
-import React from "react";
-import { darkTheme, theme, ThemeProvider } from "../../../stitches.config";
-import { useToggle } from "../../hooks/useToggle";
+import React, { useEffect } from "react";
+import { darkTheme, theme, ThemeProvider } from "@stitchesConfig";
+import { useToggle } from "@hooks/useToggle";
+import { Appearance, useColorScheme } from "react-native";
 
 /* ------------------------------- AppContext ------------------------------- */
 interface AppContextType {
   darkMode: boolean;
+  toggleDarkMode: (v?: boolean) => void;
 }
 
 const AppContext = React.createContext<AppContextType>({
   darkMode: false,
+  toggleDarkMode: () => {},
 });
 
 /* --------------------------- AppContextProvider --------------------------- */
@@ -20,10 +21,19 @@ interface AppContextProviderProps {
 
 const AppContextProvider = (props: AppContextProviderProps) => {
   const { children } = props;
-  const [darkMode, toggleDarkMode] = useToggle(false);
+  const deviceColorScheme = useColorScheme();
+  const [darkMode, toggleDarkMode] = useToggle(
+    deviceColorScheme === "dark" ? true : false
+  );
+
+  useEffect(() => {
+    Appearance.addChangeListener(({ colorScheme }) => {
+      toggleDarkMode(colorScheme === "dark" ? true : false);
+    });
+  }, []);
 
   return (
-    <AppContext.Provider value={{ darkMode }}>
+    <AppContext.Provider value={{ darkMode, toggleDarkMode }}>
       <ThemeProvider theme={darkMode ? darkTheme : theme}>
         {children}
       </ThemeProvider>

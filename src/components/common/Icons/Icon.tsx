@@ -9,12 +9,13 @@ interface _IconProps {
 
 export interface IconProps extends Omit<_IconProps, "children"> {}
 
-const Icon = ({ size = 24, color, children }: _IconProps) => (
+const Icon = ({ size, color, children }: _IconProps) => (
   <Svg
-    width={size || 24}
-    height={size || 24}
+    width={size + 8 || 26}
+    height={size + 8 || 26}
     viewBox="0 0 1200 1200"
     fill={color}
+    strokeWidth={10}
   >
     {children}
   </Svg>
