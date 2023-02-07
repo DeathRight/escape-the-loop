@@ -12,6 +12,7 @@ export default () => {
       icon={darkMode ? SunIcon : MoonIcon}
       size={"xl"}
       px={"md"}
+      cta
       rounded
       onPress={() => toggleDarkMode()}
     />

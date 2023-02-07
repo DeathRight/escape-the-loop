@@ -20,7 +20,10 @@ export enum steps {
   hiC = 11,
 }
 
-type ScaleWithStepTokens = Record<keyof typeof steps, string>;
+type StepToken = keyof typeof steps;
+type StepTokenRange = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
+
+type ScaleWithStepTokens = Record<StepToken, string>;
 
 /**
  * Theme color scales
@@ -42,6 +45,36 @@ export type ScaleNamesWithoutA = Exclude<
 
 /* ------------------------------------ * ----------------------------------- */
 
+interface TouchableTokens {
+  normal: number;
+  hover: number;
+  active: number;
+}
+
+type TouchableStyle = "subtle" | "normal" | "solid";
+
+const TouchableStyles: Record<TouchableStyle, TouchableTokens> = {
+  subtle: {
+    normal: 2,
+    hover: 3,
+    active: 4,
+  },
+  normal: {
+    normal: 3,
+    hover: 4,
+    active: 5,
+  },
+  solid: {
+    normal: 4,
+    hover: 5,
+    active: 6,
+  },
+};
+
+type TouchableStyleScheme = Record<keyof TouchableTokens, string>;
+
+/* ------------------------------------ * ----------------------------------- */
+
 /* -------------------------------------------------------------------------- */
 /*                                  Functions                                 */
 /* -------------------------------------------------------------------------- */
@@ -49,8 +82,46 @@ export type ScaleNamesWithoutA = Exclude<
 /**
  * Get prefixed step token from scale name and step (i.e. "neutral:appBg")
  */
-export const getStepToken = (scale: ScaleNames, step: keyof typeof steps) =>
-  `${scale}:${step}`;
+export const getStepToken = (
+  scale: ScaleNames,
+  step: StepToken | StepTokenRange
+) => {
+  if (typeof step === "number") {
+    step = steps[step] as StepToken;
+  }
+
+  return `${scale}:${step}`;
+};
+
+/**
+ * Get associated index of step token
+ */
+export const getStepTokenIndex = (step: StepToken | StepTokenRange) => {
+  if (typeof step === "number") {
+    return step;
+  }
+
+  return steps[step];
+};
+
+/**
+ * Get touchable style tokens for a given scale and style
+ * @returns
+ */
+export const getTouchableStyleTokens = (
+  scale: ScaleNames,
+  style: TouchableStyle
+) => {
+  const tokens = TouchableStyles[style];
+
+  let touchableStyleTokens: TouchableStyleScheme = {
+    normal: getStepToken(scale, tokens.normal as StepTokenRange),
+    hover: getStepToken(scale, tokens.hover as StepTokenRange),
+    active: getStepToken(scale, tokens.active as StepTokenRange),
+  };
+
+  return touchableStyleTokens;
+};
 
 /**
  * Convert color scale to step tokens for better readability
@@ -60,7 +131,7 @@ export const getStepToken = (scale: ScaleNames, step: keyof typeof steps) =>
 export const scaleToStepTokens = (scale: Record<string, string>) => {
   let stepTokens = {};
   Object.keys(scale).forEach((key, index) => {
-    stepTokens[steps[index] as keyof typeof steps] = scale[key];
+    stepTokens[steps[index] as StepToken] = scale[key];
   });
   return stepTokens as ScaleWithStepTokens;
 };

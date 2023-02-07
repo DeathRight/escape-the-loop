@@ -1,5 +1,5 @@
 import { Alignment, ThemeFontSize, ThemeSpace } from "@util/types";
-import React from "react";
+import React, { useCallback } from "react";
 import { Pressable, PressableProps, Text } from "react-native";
 import { config, useTheme } from "@stitchesConfig";
 import {
@@ -44,6 +44,8 @@ const Button = (props: ButtonProps) => {
   const theme = useTheme();
   const themeStyles = useThemeStyles();
 
+  // TODO: Refactor this to use getTouchableStyleTokens
+
   // Colors
   const normalColor = theme.colors[
     getStepToken(color, !cta ? "elBg" : "elBgHover")
@@ -58,9 +60,12 @@ const Button = (props: ButtonProps) => {
   const textColor = theme.colors[getStepToken(`${color}A`, "hiC")] as string;
 
   // Styles
-  const baseButtonStyle = (pressed: boolean) => ({
-    backgroundColor: pressed ? pressedColor : normalColor,
-  });
+  const baseButtonStyle = useCallback(
+    (pressed: boolean) => ({
+      backgroundColor: pressed ? pressedColor : normalColor,
+    }),
+    []
+  );
   const buttonDirection = {
     flexDirection: titleAlign === "right" ? "row" : "row-reverse",
   } as const;
